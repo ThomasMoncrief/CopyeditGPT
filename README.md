@@ -22,7 +22,7 @@ How much does it cost? The short answer is, very little.<br>
 This app is using the Davinci-003 model, which costs $0.03 per one thousand tokens of usage. Analysis of one thousand words will use about 2,500 tokens. So, editing a full-length article will run you about ten cents. A novel of one hundred thousand words will run you about half the cost of a cup of coffee.
 
 <h4>.txt Files</h4>
-Currently this editor only accept .txt files, as I am still working to ensure it provides consistently formatted results. It should soon be accepting .docx, .doc, and other text files, as I will be exploring which Python modules are most useful here.
+Currently this editor only accepts .txt files, as I am still working to ensure it provides consistently formatted results. It should soon be accepting .docx, .doc, and other text files, as I will be exploring which Python modules are most useful here.
 
 <h4>Patience</h4>
 A submission of a thousand words takes about fifteen to thirty seconds to process, depending on the time of day. If you have to stare at a loading wheel for a while, just imagine what it was like being a programmer in 1990 trying to download an entire megabyte of data.
