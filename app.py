@@ -14,8 +14,7 @@ app.debug=True
 def index():
     if request.method == "GET":
         return render_template("index.html")
-    
-        
+
     
 @app.route('/upload', methods=["POST"])
 def upload():    
