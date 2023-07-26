@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+    
+{% block main %}
+    <h1>Welcome to Post Editor!</h1>
+    <br>
+    <div style="text-align:center"><img src="/static/robot_working.png" style="width:50%;height:50%;"></div>
+    <h2>How it works:</h2>
+    <p>Upload a .txt file of almost any size (limit 16MB) that needs some touchup to the spelling, grammar, punctuation, and other style specifics.
+        The application will then submit your file to be edited by OpenAI's GPT-3. 
+    </p>
+    <p>Keep in mind that requests take about fifteen seconds per thousand words.
+    </p>
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <h3>Enter your OpenAI API Key</h3>
+                <input id="key" name="key" placeholder="Key" type="password">
+            </div>
+            <div style="text-align: left;">
+                <br>
+                <h3>Don't have an OpenAI key?<a href="https://openai.com/blog/openai-api">Get one here.</a></h3>
+            </div>
+            
+            <br><br>
+            <input type="file" name="file">
+            <button class="btn btn-dark" type="submit" name="upload" value="Run Editor">Run Editor</button>    
+        </form>
+    </div>
+{% endblock %}

@@ -10,8 +10,6 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
 app.config["ALLOWED_EXTENSIONS"] = [".txt"] #Would like to add .doc and .docx later
 app.debug=True
 
-edit_progress = ""
-
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":

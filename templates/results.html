@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+    
+{% block main %}
+<div style="margin-left:10%;">  
+<h1>Results</h1>
+</div>
+    <br><br><br>
+    <div style="text-align: center;">
+        <button onclick="window.location.href='/download';">Download Edited Text</button>
+    </div>
+    
+    <br><br>
+    {% for p in text_to_display %}
+    <p>{{p}}</p>
+    {% endfor %}
+    <br>
+    <div style="text-align:center;">
+        <button onclick="window.location.href='/';" >Back to editor</button>
+    </div>
+    
+{% endblock %}

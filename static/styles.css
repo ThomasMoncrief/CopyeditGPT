@@ -1,0 +1,21 @@
+* {
+    margin-left: 5%;
+    margin-right: 5%;
+    
+    font-family:Georgia, 'Times New Roman', Times, serif
+}
+
+body{
+    background-color: rgb(32, 175, 186);
+}
+
+p{
+    margin-left: 15%;
+    margin-right: 15%;
+    font-size:larger;
+}
+
+.navbar{
+    height: 50px;
+    background-color: rgb(32, 175, 186);
+}
