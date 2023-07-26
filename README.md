@@ -46,8 +46,8 @@ I would like to use the Aspose.Words library to receive text in .docx files. I a
 Currently, the settings on the API call are fixed, but it would not be difficult to implement a frontend panel which lets the client alter some of the settings. They may want to alter the prompt, changes which style guide to follow, dial up the "temperature," or alter other settings. These will need to be succinctly explained to the user and made easy to alter through a menu.
 <h4>User registration and file storage</h4>
 The user should be able register a username and navigate to the results page and download their edited files at anytime from a database. SQLAlchemy needs to be built in for storing binary files generated in the results section. 
-<h4>Handle paragraphs of any length</h4>
-Currently my method for breaking apart large text files is to split them by paragraph (or by "\n" characters). This ensures a simple method for breaking apart the text while still retaining some of the formatting, in case the user just wants to read their results on the page, or if they don't have a way to compare docs. However, in rare cases where a paragraph is over a thousand words, the editing process will be prevented by the API's token limit. A more sophisticated approach could split the text first by "\n" then break it down into another layer of split apart words, but seeing as this will help to accommodate rare types of writing, it has not yet been implemented.
+<h4>Ensure consistency and accuracy of results</h4>
+Experiment with the prompt and other parameters in the API call to ensure the ChatGPT engine will give back optimal results. With the current settings, it will tend to over-edit. With the current method of splitting up text, the engine may be confused by sentences abruptly ending and starting.
 <h3>Thanks for reading!</h3>
 Please give the app a try and review my code! This is my first ever coding project. I have a lot to learn and would very much like to work with others who can provide constructive criticism to help improve my abilities.<br>
 
