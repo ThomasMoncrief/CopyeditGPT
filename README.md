@@ -1,5 +1,8 @@
-<h2>Welcome to Post Editor!</h2>
-This project helps you utilize OpenAi's GPT3 engine to copy edit your documents. Submit a .txt file with writing of any kind, and the site will return a document that has been edited for spelling, grammar, punctuation, syntax, and other specifications of the Chicago Manual of Style. 
+# CopyeditGPT
+A Flask app that sends text to OpenAI for copy editing. 
+
+<h2>Welcome to CopyeditGPT!</h2>
+This project helps you utilize OpenAI's GPT3 engine to copy edit your documents. Submit a .txt file with writing of any kind, and the site will return a document that has been edited for spelling, grammar, punctuation, syntax, and other specifications of the Chicago Manual of Style. 
 
 While ChatGPT and the OpenAI API have length limitations for submissions, this web app will handle almost any length behind the scenes, breaking down large documents into chunks of about one thousand words, submitting them in successive API calls, then returning the results in one file. Be mindful that this app breaks documents down by paragraph, so if your document has huge paragraphs (specifically, two successive paragraphs totaling more than about 1500 words), then it may resort in an error. 
 
@@ -10,7 +13,8 @@ You will need:
 3. Patience (especially with long documents)<br>
 
 <h4>API Key</h4>
-If you don't have an API key, head to [Open AI's API page](https://platform.openai.com/account/api-keys) and create an account. You will also need to set up a payment method, as the API does cost a negligible amount for usage.
+
+If you don't have an API key, head to <a href="https://platform.openai.com/account/api-keys/" target="_blank">OpenAI's API page</a> and create an account. You will also need to set up a payment method, as the API does cost a negligible amount for usage.
 
 How much does it cost? The short answer is, very little.<br>
 This app is using the Davinci-003 model, which costs $0.03 per one thousand tokens of usage. Analysis of one thousand words will use about 2,500 tokens. So, editing a full-length article will run you about ten cents. A novel of one hundred thousand words will run you about half the cost of a cup of coffee.
