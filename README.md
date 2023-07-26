@@ -7,10 +7,12 @@ This project helps you utilize OpenAI's GPT3 engine to copy edit your documents.
 While ChatGPT and the OpenAI API have length limitations for submissions, this web app will handle almost any length behind the scenes, breaking down large documents into chunks of about one thousand words, submitting them in successive API calls, then returning the results in one file. Be mindful that this app breaks documents down by paragraph, so if your document has huge paragraphs (specifically, two successive paragraphs totaling more than about 1500 words), then it may resort in an error. 
 
 <h3>How to Use</h3>
-You will need:
+You will need:<br>
 1. An OpenAI API key.<br>
 2. Your writing in a .txt file.<br>
 3. Patience (especially with long documents)<br>
+
+Currently, this code functions only in a local Flask environment. The only additional library you will need is OpenAI (get it with 'pip install openai'). Run the flask app and navigate to http://localhost:5000/ in order to try it out!
 
 <h4>API Key</h4>
 
