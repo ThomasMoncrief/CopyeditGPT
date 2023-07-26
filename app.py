@@ -5,7 +5,7 @@ from werkzeug.exceptions import RequestEntityTooLarge
 from functions import openai_api, run_editor
 
 app = Flask(__name__)
-app.config["UPLOAD_DIRECTORY"] = 'uploads/'
+app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
 app.config["ALLOWED_EXTENSIONS"] = [".txt"] #Would like to add .doc and .docx later
 app.debug=True
@@ -28,7 +28,7 @@ def upload():
             return "Cannot upload that file type"
 
         if file:
-            file.save("uploads/original.txt")
+            file.save("text_files/original.txt")
     except RequestEntityTooLarge:
         return "File is too large."
     run_editor(key)
@@ -43,7 +43,7 @@ def progress(edit_progress):
 
 @app.route('/results')
 def results():    
-    with open("uploads/edited.txt", "r", encoding='utf-8', errors="ignore") as f:
+    with open("text_files/edited.txt", "r", encoding='utf-8', errors="ignore") as f:
         edited_text = f.read()
     edited_text = edited_text.split("\n\n")
     return render_template("results.html", text_to_display=edited_text)
@@ -51,7 +51,7 @@ def results():
 
 @app.route('/download')
 def download(): 
-    return send_file("uploads\\edited.txt", as_attachment=True, download_name="edited.txt")
+    return send_file("text_files\\edited.txt", as_attachment=True, download_name="edited.txt")
 
 
 @app.route('/welcome')
