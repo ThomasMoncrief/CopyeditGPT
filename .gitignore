@@ -2,7 +2,6 @@
 /__pycache__/
 /.vs/
 /.vscode/
-/text_files/
 pyvenv.cfg
 
 #if you want to store your key in an API_KEY.txt file without sharing
