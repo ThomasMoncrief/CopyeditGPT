@@ -2,3 +2,5 @@
 *
 # Except this file
 !.gitignore
+
+#Flask will store original and edited text files here, but no need to commit them to the master branch.
