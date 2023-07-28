@@ -1,0 +1,6 @@
+*.log
+/__pycache__/
+/.vs/
+/.vscode/
+/text_files/
+pyvenv.cfg
