@@ -3,12 +3,12 @@ from flask import render_template
 
 def run_editor(key):
     #clear the edited.txt file
-    edited_text = open("uploads/edited.txt", "w", encoding='utf-8', errors="ignore")
+    edited_text = open("text_files/edited.txt", "w", encoding='utf-8', errors="ignore")
     edited_text.close()
     #reopen with "append"
-    edited_text = open("uploads/edited.txt", "a", encoding='utf-8', errors="ignore")
+    edited_text = open("text_files/edited.txt", "a", encoding='utf-8', errors="ignore")
 
-    with open("uploads/original.txt", "r", encoding='utf-8', errors="ignore") as f:
+    with open("text_files/original.txt", "r", encoding='utf-8', errors="ignore") as f:
         original_text = f.read()
         f.close
     paragraph_text = original_text.split("\n")
