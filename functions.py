@@ -30,9 +30,8 @@ def run_editor(key):
         submit_text = submit_text[4000 + adj_count:]
         
         #turn this on, and next line off, for for testing purposes.
-        edited_text.write(submit_chunk)
-        
-        #edited_text.write(openai_api(key, submit_chunk))
+        #edited_text.write(submit_chunk)
+        edited_text.write(openai_api(key, submit_chunk))
         
         #prints progress to terminal. Need to get something working for someone using the website.
         run_count += 1
