@@ -2,9 +2,8 @@
 /__pycache__/
 /.vs/
 /.vscode/
-pyvenv.cfg
 /text_files/original.txt
 /text_files/edited.txt
 
-#if you want to store your key in an API_KEY.txt file without sharing
-API_KEY.txt
+#if you want to write down your key or other personal notes without pushing them to the repository:
+personal_notes.txt
