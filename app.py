@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, send_file, redirect
 from flask_socketio import SocketIO
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import openai_api, run_editor
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
