@@ -61,3 +61,4 @@ def openai_api(key, original_text):
         presence_penalty=0)['choices'][0]['text']
     return chatgpt_response
 
+#trivial_change
