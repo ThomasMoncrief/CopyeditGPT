@@ -1,15 +1,13 @@
 import os
 from flask import Flask, render_template, request, send_file, redirect
-from flask_socketio import SocketIO
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import openai_api, run_editor
-from flask_socketio import SocketIO
+
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
 app.config["ALLOWED_EXTENSIONS"] = [".txt"] #Would like to add .doc and .docx later
-socketio = SocketIO(app)
 
 
 @app.route('/', methods=["GET", "POST"])
