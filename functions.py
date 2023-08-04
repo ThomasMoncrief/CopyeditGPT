@@ -30,9 +30,8 @@ def run_editor(key):
         submit_text = submit_text[4000 + adj_count:]
         
         #turn this on, and next line off, for for testing purposes.
-        edited_text.write(submit_chunk)
-        
-        #edited_text.write(openai_api(key, submit_chunk))
+        #edited_text.write(submit_chunk)
+        edited_text.write(openai_api(key, submit_chunk))
         
         #prints progress to terminal. Need to get something working for someone using the website.
         run_count += 1
@@ -49,7 +48,7 @@ def openai_api(key, original_text):
     
     openai.api_key = key #filled in by upload()
         
-    prompt = "A professional copy ediotor has taken the text below and fixed all copy editing mistakes. He used the Chicago Manual of Style for writing numbers, capitalization, headers, and other guidelines. He did not edit the voice or style of the prose. He formatted quotes as ASCII directional quotes.\n\n"
+    prompt = "A professional copy editor has taken the text below and fixed all copy editing mistakes. He used the Chicago Manual of Style for writing numbers, capitalization, headers, and other guidelines. He did not edit the voice or style of the prose. He formatted quotes as ASCII directional quotes.\n\n"
     prompt += original_text + "\n\nRewritten by the editor:\n"
 
     chatgpt_response = openai.Completion.create(
