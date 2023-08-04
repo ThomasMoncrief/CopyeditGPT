@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
-from functions import openai_api, run_editor
+from functions import run_editor
 
 
 app = Flask(__name__)
