@@ -2,13 +2,15 @@ import os
 from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import run_editor
+from flask_socketio import SocketIO
+import time
 
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
 app.config["ALLOWED_EXTENSIONS"] = [".txt"] #Would like to add .doc and .docx later
-
+#socketio = SocketIO(app)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -31,14 +33,17 @@ def upload():
             file.save("text_files/original.txt")
     except RequestEntityTooLarge:
         return "File is too large."
-    run_editor(key)
-    return redirect('/results')
+
+    #run_editor(key)
+    #return redirect('/results')
+
+    return progress()
+
 
 #This is not in use, but would like to get it working ASAP
-@app.route('/progress', methods=["GET"])
-def progress(edit_progress):
-    if request.method == "GET":
-        return render_template("progress.html", progress = edit_progress)
+@app.route('/progress')
+def progress():
+    return render_template("/progress.html")
 
 
 @app.route('/results')

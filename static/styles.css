@@ -19,3 +19,8 @@ p{
     height: 50px;
     background-color: rgb(32, 175, 186);
 }
+
+#progressBar {
+    width: 900px; /* Set the desired width */
+    height: 60px; /* Set the desired height */
+}

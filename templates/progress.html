@@ -5,5 +5,38 @@
 {% endblock %}
     
 {% block main %}
-<h1>{progress}</h1>
+
+<progress id="progressBar" value="0" max="100"></progress>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const progressBar = document.getElementById("progressBar");
+        const updateInterval = 1000; // 1000 milliseconds = 1 second
+        const totalSteps = 10; // Number of steps to complete 100% (10 steps to fill 10%)
+
+        let currentStep = 0;
+
+        function updateProgress() {
+            // Calculate the percentage completion
+            const percentage = (currentStep / totalSteps) * 100;
+            progressBar.value = percentage;
+
+            if (currentStep >= totalSteps) {
+                // Processing completed, take any action you need
+                console.log("Processing completed!");
+                // Hide or disable the progress bar, show a completion message, etc.
+
+                // Stop the loop when progress reaches 100%
+                clearInterval(interval);
+            }
+
+            // Increment the current step
+            currentStep++;
+        }
+
+        // Call the updateProgress function every second
+        const interval = setInterval(updateProgress, updateInterval);
+    });
+</script>
+
 {% endblock %}
