@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Unused
+{% endblock %}
+    
+{% block main %}
+
+    <div class="containter">
+        <div class="row">
+            <div class="column">
+
+                <div class="mb-3 mt-3">
+
+                    <h2 class="mb-3" style="font-weight: 300">Editing Progress</h2>
+
+                    <div class="form-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file_input" oninput="input_filename();">
+                            <label for="file_input" id="file_input_label" class="custom-file-label">Select File</label>
+                        </div>
+                    </div>
+                    
+                    <button onclick="upload('{{ request.url }}')" id="upload_btn" class="btn btn-primary">Upload</button>
+                    
+                    <button class="btn btn-primary d-none" id="loading_btn" type="button" diabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Editing
+                    </button>
+
+                    <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel</button>
+
+                </div>
+
+                
+
+                <div id="progress_wrapper" class="d-none">
+                    <label id="progress_status">50% uploaded</label>
+                    <div class="progress mb-3">
+                        <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" area-valuemin="0" area-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <div id="alert_wrapper"></div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var progress = document.getElementById("progress");
+        var progress_wrapper = document.getElementById("progress_wrapper");
+        var progress_status = document.getElementById("progress_status");
+
+        var upload_btn = document.getElementById("upload_btn");
+        var loading_btn = document.getElementById("loading_btn");
+        var cancel_btn = document.getElementById("cancel_btn");
+
+        var alert_wrapper = document.getElementById("cancel_btn");
+        
+        var input = document.getElementById("file_input");
+        var file_input_label = document.getElementById("file_input_label");
+
+        function show_alert(message, alert) {
+            alert_wrapper.innerHTML
+        }
+
+        function input_filename() {
+            file_input_label.innterText = input.files[0].name;
+        }
+
+        function upload(url) {
+            if(!input.value) {
+                show.alert("No file selected", "warning");
+                return;
+            }
+            var data = new FormData();
+            var request = new XMLHttpRequest();
+            request.responseType = "json";
+            alert_wrapper.innerHTML = "";
+            input.disabled = True;
+            upload.btn.classList.add("d-none");
+            loading_btn.classList.remove("d-none");
+            cancel_btn.classList.remove("d-none");
+            progress_wrapper.ClassList.remove("d-none");
+            var file = input.files[0];
+            var filename = file.name;
+            var filesize = file.size;
+            document.cookie = "filesize=$(filesize)";
+            data.append("file", file);
+            request.upload.addEventListener("progress", function(e) {
+
+                var loaded = e.loaded;
+                var total = e.total;
+
+                var percentage_complete = (loaded / total ) * 100;
+                progress.setAttribute("style", "width: ${Math.floor(percentage_complete)}");
+                progress_status.innerText = "${Math.floor(percentage_complete)}% uploaded";
+
+            })
+            request.addEventListener("load", function(e) {
+                if (request.status == 200) {
+                    show_alert("${request.response.message}", "success");
+                }
+                else {
+                    show_alert("Error uploading file", "danger");
+                }
+
+                reset();
+
+            })
+            
+            request.addEventListener("error", function(e) {
+                reset();
+                show_alert("Error uploading file", "danger");
+            })
+
+            request.open("post", url);
+            request.sent(data);
+
+            cancel_btn.addEventListener("click", function() {
+                request.abort();
+            })
+        } // end upload
+
+        function reset() {
+            input.value = null;
+            cancel_btn.classList.add("d-none");
+            loading_btn.classList.add("d-none");
+            upload_btn.classList.remove("d-none");
+            progress_wrapper.classList.add("d-none");
+            progress.setAttribute("style", "width: 0%");
+            file_input_label.innerText = "Select file";
+        }
+
+    </script>
+
+
+{% endblock %}
