@@ -51,3 +51,4 @@ Experiment with the prompt and other parameters in the API call to ensure the Ch
 <h3>Thanks for reading!</h3>
 Please give the app a try and review my code! This is my first ever coding project. I have a lot to learn and would very much like to work with others who can provide constructive criticism to help improve my abilities.<br>
 
+Thank you to the people that contributed as well!
