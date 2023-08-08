@@ -5,5 +5,32 @@
 {% endblock %}
     
 {% block main %}
-<h1>{progress}</h1>
+    <br><br>
+    <div style="text-align: center;">
+        {% if chunks > 1 %}
+            <h3>Your submission will require {{chunks}} API calls.</h3>
+        {% else %}
+            <h3>Your submission will require {{chunks}} API call.</h3>
+        {% endif %}
+        <h3>Estimated wait time: {{wait}} seconds</h3>
+
+        <form id ="run_form" action="/progress" method="post" enctype="multipart/form-data">
+            <button id="run_editor" style="opacity: 1" class="btn btn-dark" type="submit" name="run_editor" value="run_editor">Run Editor</button>
+        </form>
+    </div>
+    
+    <script>
+        const progressForm = document.getElementById('run_form');
+        const runEditorBtn = document.getElementById('run_editor');
+        
+        runEditorBtn.addEventListener('click', function() {
+            progressForm.submit();
+            runEditorBtn.disabled = true;
+            runEditorBtn.innerHTML = `
+                
+                <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
+                <span class="sr-only">Running</span>
+            `;
+        });
+    </script>
 {% endblock %}

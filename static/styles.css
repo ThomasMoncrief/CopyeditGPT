@@ -8,7 +8,10 @@
 body{
     background-color: rgb(32, 175, 186);
 }
-
+h2{
+    margin-left: 15%;
+    margin-right: 15%;
+}
 p{
     margin-left: 15%;
     margin-right: 15%;
@@ -18,4 +21,9 @@ p{
 .navbar{
     height: 50px;
     background-color: rgb(32, 175, 186);
+}
+
+#progressBar {
+    width: 900px;
+    height: 60px;
 }
