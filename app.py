@@ -1,17 +1,18 @@
-
 import os, global_var
-from flask import Flask, render_template, request, send_file, redirect, jsonify
+from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import prep_editor, run_editor
-#from flask_socketio import SocketIO
-# this will come into use when we start using web sockets in order to get a better progress page running.
+from datetime import datetime
+import aspose.words as aw
 
-#Thomas's comment is here
+# this will come into use when we start using web sockets in order to get a better progress page running.
+#from flask_socketio import SocketIO
+
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
-app.config["ALLOWED_EXTENSIONS"] = [".txt"] #Would like to add .doc and .docx later
+app.config["ALLOWED_EXTENSIONS"] = [".txt", ".docx"] #Would like to add .doc and .docx later
 #socketio = SocketIO(app)
 
 @app.route('/', methods=["GET", "POST"])
@@ -19,9 +20,7 @@ def index():
     if request.method == "GET":
         return render_template("index.html")
 
-#new route to go here
 
-    
 @app.route('/upload', methods=["POST"])
 def upload():
     try:
@@ -29,16 +28,16 @@ def upload():
         # Would be nice to check the file size here. Not sure if MAX_CONTENT checks it here or after file.save, 
         # but it takes a long time for it to check files that are 1 GB+
         global_var.key = request.form['key']
-        extension = os.path.splitext(file.filename)[1]
-        if extension not in app.config["ALLOWED_EXTENSIONS"]:
+        global_var.extension = os.path.splitext(file.filename)[1]
+        if global_var.extension not in app.config["ALLOWED_EXTENSIONS"]:
             return "Cannot upload that file type"
 
         if file:
-            file.save("text_files/original.txt")
+            file.save("text_files/original" + global_var.extension)
     except RequestEntityTooLarge:
         return "File is too large."
 
-    global_var.submit_text = prep_editor()
+    global_var.submit_text = prep_editor(global_var.extension)
     return redirect('/progress')
 
 
@@ -61,7 +60,17 @@ def results():
 
 @app.route('/download')
 def download(): 
-    return send_file("text_files\\edited.txt", as_attachment=True, download_name="edited.txt")
+    # print("extension is ***", global_var.extension)
+    # file_path = str("text_files\original" + global_var.extension)
+    # print(file_path)
+    original = aw.Document("text_files\original" + global_var.extension)
+    
+    #*Need to write .docx corrections straight into a .docx file and make sure the font type and size are consistent. Otherwise it is difficult to reject changes. 
+    edited = aw.Document("text_files\edited.txt")
+
+    original.compare(edited, "CopyeditGPT Revision", datetime.now())
+    original.save("text_files/results" + global_var.extension)
+    return send_file("text_files/results" + global_var.extension, as_attachment=True, download_name="results" + global_var.extension)
 
 
 if __name__ == "__main__":
