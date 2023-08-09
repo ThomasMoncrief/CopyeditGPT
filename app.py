@@ -6,9 +6,7 @@ from functions import prep_editor, run_editor
 #from flask_socketio import SocketIO
 # this will come into use when we start using web sockets in order to get a better progress page running.
 
-
-# jeremy comment
-
+#Thomas's comment is here
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
