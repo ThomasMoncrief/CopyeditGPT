@@ -1,10 +1,11 @@
+
 import os, global_var
 from flask import Flask, render_template, request, send_file, redirect, jsonify
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import prep_editor, run_editor
 #from flask_socketio import SocketIO
 # this will come into use when we start using web sockets in order to get a better progress page running.
-
+# jeremy comment
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
