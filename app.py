@@ -19,6 +19,8 @@ def index():
     if request.method == "GET":
         return render_template("index.html")
 
+#new route to go here
+
     
 @app.route('/upload', methods=["POST"])
 def upload():
