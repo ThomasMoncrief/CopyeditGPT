@@ -1,6 +1,6 @@
 import openai
 import global_var
-import aspose.words as aw
+from docx import Document
 
 def prep_editor(extension):
     submit_text = ""
@@ -14,11 +14,9 @@ def prep_editor(extension):
             submit_text += "\n"
     
     if extension == ".docx":
-        original_text = aw.Document("text_files/original.docx")
-        for paragraph in original_text.get_child_nodes(aw.NodeType.PARAGRAPH, True):    
-            #paragraph = paragraph.as_paragraph()
-            submit_text += paragraph.to_string(aw.SaveFormat.TEXT)
-        submit_text = submit_text[81:-144] #eliminate Aspose Words propaganda :)    
+        original_text = Document('text_files/original.docx')
+        for paragraph in original_text.paragraphs:
+            submit_text += paragraph.text + "\n"  
     
     global_var.chunk_count = (len(submit_text) // 4000) + 1
     return submit_text
@@ -42,9 +40,9 @@ def run_editor(submit_text):
         submit_text = submit_text[4000 + adj_count:]
         
         #turn this on, and next line off, for for testing purposes.
-        #edited_text.write(submit_chunk)
-        edited_text.write(openai_api(submit_chunk))
-        
+        edited_text.write(submit_chunk)
+        #edited_text.write(openai_api(submit_chunk))
+
         #prints progress to terminal. Need to get something working for client side.
         run_count += 1
         print("Finished {:.0%}".format(run_count / global_var.chunk_count))

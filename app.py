@@ -2,17 +2,21 @@ import os, global_var
 from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import prep_editor, run_editor
-from datetime import datetime
-import aspose.words as aw
+import docx
 
-# this will come into use when we start using web sockets in order to get a better progress page running.
+# import aspose.words as aw
+# from datetime import datetime
+# currently not using Aspose Words, because this is trash. But it is the only thing I can
+# find that will automate Word's compare tool, so we may want to bring it back later.
+
+
 #from flask_socketio import SocketIO
-
+# this will come into use when we start using web sockets in order to get a better progress page running.
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
-app.config["ALLOWED_EXTENSIONS"] = [".txt", ".docx"] #Would like to add .doc and .docx later
+app.config["ALLOWED_EXTENSIONS"] = [".txt", ".docx"] #Would like to add LaTex and RTF compatibility later.
 #socketio = SocketIO(app)
 
 @app.route('/', methods=["GET", "POST"])
@@ -60,17 +64,19 @@ def results():
 
 @app.route('/download')
 def download(): 
-    # print("extension is ***", global_var.extension)
-    # file_path = str("text_files\original" + global_var.extension)
-    # print(file_path)
-    original = aw.Document("text_files\original" + global_var.extension)
+    #*Need to match original document's formatting. Otherwise it is difficult to reject changes. 
+    # Need to provide an option to download .txt type, not make it automatic if .txt was the uploaded type.
+    if global_var.extension == ".txt":
+        return send_file("text_files/edited.txt", as_attachment=True)
     
-    #*Need to write .docx corrections straight into a .docx file and make sure the font type and size are consistent. Otherwise it is difficult to reject changes. 
-    edited = aw.Document("text_files\edited.txt")
-
-    original.compare(edited, "CopyeditGPT Revision", datetime.now())
-    original.save("text_files/results" + global_var.extension)
-    return send_file("text_files/results" + global_var.extension, as_attachment=True, download_name="results" + global_var.extension)
+    edited = docx.Document()
+    with open("text_files/edited.txt", "r", encoding='utf-8', errors="ignore") as f:
+        edited_text = f.read()
+    edited_text = edited_text.split("\n")
+    for paragraph in edited_text:
+        edited.add_paragraph(paragraph)
+    edited.save("text_files/edited.docx")
+    return send_file("text_files/edited.docx")
 
 
 if __name__ == "__main__":
