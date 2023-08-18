@@ -27,20 +27,30 @@ def index():
 
 @app.route('/upload', methods=["POST"])
 def upload():
-    try:
-        file = request.files['file']
-        # Would be nice to check the file size here. Not sure if MAX_CONTENT checks it here or after file.save, 
-        # but it takes a long time for it to check files that are 1 GB+
-        global_var.key = request.form['key']
-        global_var.extension = os.path.splitext(file.filename)[1]
-        if global_var.extension not in app.config["ALLOWED_EXTENSIONS"]:
-            return "Cannot upload that file type"
+    global_var.key = request.form['key']
+    if request.form['upload'] == "upload_file":
+        try:
+            file = request.files['file']
+            # Would be nice to check the file size here. Not sure if MAX_CONTENT checks it here or after file.save, 
+            # but it takes a long time for it to check files that are 1 GB+
+            global_var.extension = os.path.splitext(file.filename)[1]
+            if global_var.extension not in app.config["ALLOWED_EXTENSIONS"]:
+                return "Cannot upload that file type"
 
-        if file:
-            file.save("text_files/original" + global_var.extension)
-    except RequestEntityTooLarge:
-        return "File is too large."
-
+            if file:
+                file.save("text_files/original" + global_var.extension)
+        except RequestEntityTooLarge:
+            return "File is too large."
+    
+    if request.form['upload'] == "upload_text":        
+        #reset paragraph formatting sent by the HTML form
+        text = request.form['text_box'].split("\r\n")
+        submit_text = open("text_files/original.txt", "w", encoding='utf-8', errors="ignore")
+        for paragraph in text:
+            submit_text.write(paragraph + "\n")
+        submit_text.close()
+        global_var.extension = ".txt"
+    
     global_var.submit_text = prep_editor(global_var.extension)
     return redirect('/progress')
 

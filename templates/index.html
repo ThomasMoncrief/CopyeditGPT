@@ -28,12 +28,22 @@
                 <input id="key" name="key" class="form-control mb-2 mr-sm-2" placeholder="Key" type="password">
             </div>
             <br>
+            <h4>Upload a Word document (.docx)</h4>
             <div class="mb-3">
                 <label for="fileUpload" class="form-label"></label>
                 <input class="form-control" type="file" name="file" id="file">
             </div>
             <div>
-                <button class="btn btn-dark" type="submit" name="upload" value="Run Editor">Prepare Editor</button>    
+                <button class="btn btn-dark" type="submit" name="upload" value="upload_file">Submit file</button>    
+            </div>
+            <br><br>
+            <h4>Or paste your text below</h4>
+            <div class="form-group">
+                <textarea class="form-control" id="text_box" name="text_box" rows="5"></textarea>
+            </div>
+            <br>
+            <div>
+                <button class="btn btn-dark" type="submit" name="upload" value="upload_text">Submit text</button>    
             </div>
         </form>
         <br><br><br><br><br>
