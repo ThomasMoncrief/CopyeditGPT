@@ -10,7 +10,8 @@
 </div>
     <br><br><br>
     <div style="text-align: center;">
-        <button onclick="window.location.href='/download';">Download Edited Text</button>
+        <button class="btn btn-dark" onclick="window.location.href='/download?type=txt';">Download Plain Text</button>
+        <button class="btn btn-dark" onclick="window.location.href='/download?type=docx';">Download Word Document</button>
     </div>
     
     <br><br>
@@ -19,7 +20,7 @@
     {% endfor %}
     <br>
     <div style="text-align:center;">
-        <button onclick="window.location.href='/';" >Back to editor</button>
+        <button class="btn btn-dark" onclick="window.location.href='/';" >Back to editor</button>
     </div>
     
 {% endblock %}

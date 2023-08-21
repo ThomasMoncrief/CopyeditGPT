@@ -27,3 +27,8 @@ p{
     width: 900px;
     height: 60px;
 }
+
+.inline-content {
+    display: inline;
+    vertical-align: middle; /* Optional: Align vertically if needed */
+}
