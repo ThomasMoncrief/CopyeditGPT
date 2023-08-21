@@ -14,21 +14,20 @@
     </div>
     <br>
     <h2>How it works:</h2>
-    <p>Upload a .txt file of almost any size (limit 16MB) that needs some touchup to the spelling, grammar, punctuation, and other style specifics.
+    <p>Upload a Word document or '.txt' file of almost any size (limit 16MB) that needs some touchup to the spelling, grammar, punctuation, and other style specifics.
         The application will then submit your file to be edited by OpenAI's GPT-3. 
     </p>
-    <p>Keep in mind that requests take about fifteen seconds per thousand words.
+    <p>Requests take about fifteen seconds per thousand words.
     </p>
-    <div style="text-align: left; margin: 0% !important;">
-        
-            <h3>Enter your OpenAI API Key</h3>
-            <h3>Don't have an OpenAI key?<a href="https://openai.com/blog/openai-api">Get one here.</h3></a>
+    <div>
         <form action="/upload" method="post" enctype="multipart/form-data">
+            <h3 class="inline-content">Enter your OpenAI API Key</h3>
+            <h4 class="inline-content" style="margin: 0%;">Don't have an OpenAI key?  </h4><button class="btn btn-dark inline-content" onclick="window.location.href='https://www.openai.com/blog/openai-api';">Get one here</button>
             <div>
                 <input id="key" name="key" class="form-control mb-2 mr-sm-2" placeholder="Key" type="password">
             </div>
             <br>
-            <h4>Upload a Word document (.docx)</h4>
+            <h3>Upload a Word document (.docx)</h3>
             <div class="mb-3">
                 <label for="fileUpload" class="form-label"></label>
                 <input class="form-control" type="file" name="file" id="file">

@@ -35,7 +35,8 @@ def run_editor(submit_text):
         submit_chunk += submit_text[:4000 + adj_count]
         submit_text = submit_text[4000 + adj_count:]
         
-        #turn this on, and next line off, for for testing purposes.
+        #**EDITOR SWITCH**
+        #Activate top line for testing purpose. Activate second line to run the editor.
         edited_text.write(submit_chunk)
         #edited_text.write(openai_api(submit_chunk))
 
