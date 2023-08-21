@@ -10,6 +10,7 @@ def prep_editor(extension):
             original_text = f.read()
         paragraph_text = original_text.split("\n")
         for paragraph in paragraph_text:
+            print(paragraph)
             submit_text += paragraph
             submit_text += "\n"
     
@@ -23,12 +24,7 @@ def prep_editor(extension):
     
     
 def run_editor(submit_text):
-    #clear the edited.txt file
     edited_text = open("text_files/edited.txt", "w", encoding='utf-8', errors="ignore")
-    edited_text.close()
-    #reopen with "append"
-    edited_text = open("text_files/edited.txt", "a", encoding='utf-8', errors="ignore")
-    
     run_count = 0
     while submit_text:
         adj_count = 0 #adjustment counter
@@ -39,7 +35,8 @@ def run_editor(submit_text):
         submit_chunk += submit_text[:4000 + adj_count]
         submit_text = submit_text[4000 + adj_count:]
         
-        #turn this on, and next line off, for for testing purposes.
+        #**EDITOR SWITCH**
+        #Activate top line for testing purpose. Activate second line to run the editor.
         edited_text.write(submit_chunk)
         #edited_text.write(openai_api(submit_chunk))
 
