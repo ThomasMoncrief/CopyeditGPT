@@ -4,12 +4,6 @@ from werkzeug.exceptions import RequestEntityTooLarge
 from functions import prep_editor, run_editor
 import docx
 
-# import aspose.words as aw
-# from datetime import datetime
-# currently not using Aspose Words, because this is trash. But it is the only thing I can
-# find that will automate Word's compare tool, so we may want to bring it back later.
-
-
 #from flask_socketio import SocketIO
 # this will come into use when we start using web sockets in order to get a better progress page running.
 
