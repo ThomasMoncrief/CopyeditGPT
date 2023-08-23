@@ -1,6 +1,7 @@
 import openai
 import global_var
 from docx import Document
+import time
 
 def prep_editor(extension):
     submit_text = ""
@@ -38,6 +39,7 @@ def run_editor(submit_text):
         #**EDITOR SWITCH**
         #Activate top line for testing purpose. Activate second line to run the editor.
         #edited_text.write(submit_chunk)
+        #time.sleep(1)
         edited_text.write(openai_api(submit_chunk))
 
         #Prints progress to terminal. Need to get something working for client side.
