@@ -28,25 +28,21 @@ def run_editor(submit_text):
     run_count = 0
     while submit_text:
         adj_count = 0 #adjustment counter
-        submit_chunk = ""
+        submit_chunk = "" #This will be sent to OpenAI
         if len(submit_text) > 4000:
-            while submit_text[3999 + adj_count] != " ": #makes sure to end on a space
+            while submit_text[3999 + adj_count] != " ": #Makes sure to end on a space
                 adj_count += 1
         submit_chunk += submit_text[:4000 + adj_count]
-        submit_text = submit_text[4000 + adj_count:]
+        submit_text = submit_text[4000 + adj_count:] #Writes over the chunk that was sent
         
         #**EDITOR SWITCH**
         #Activate top line for testing purpose. Activate second line to run the editor.
-        edited_text.write(submit_chunk)
-        #edited_text.write(openai_api(submit_chunk))
+        #edited_text.write(submit_chunk)
+        edited_text.write(openai_api(submit_chunk))
 
-        #prints progress to terminal. Need to get something working for client side.
+        #Prints progress to terminal. Need to get something working for client side.
         run_count += 1
         print("Finished {:.0%}".format(run_count / global_var.chunk_count))
-        
-        #edit_progress = "Finished {:.0%}".format(run_count / chunk_count)
-        # progress(edit_progress)
-        # time.sleep(1) - using this to test a progress bar feedback
     
     edited_text.close()
 
@@ -55,7 +51,7 @@ def openai_api(original_text):
     
     openai.api_key = global_var.key #filled in by upload()
         
-    prompt = "A professional copy editor has taken the text below and fixed all copy editing mistakes. He used the Chicago Manual of Style for writing numbers, capitalization, headers, and other guidelines. He did not edit the voice or style of the prose. He formatted quotes as ASCII directional quotes.\n\n"
+    prompt = "A professional copy editor has taken the text below and fixed mistakes. He followed the Chicago Manual of Style for writing numbers, capitalization, headers, and punctuation. He corrected any well-known factual mistakes involving statistics. He did not edit the voice or style of the prose. He formatted quotes as ASCII directional quotes.\n\n"
     prompt += original_text + "\n\nRewritten by the editor:\n"
 
     chatgpt_response = openai.Completion.create(
