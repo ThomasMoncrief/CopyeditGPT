@@ -5,8 +5,8 @@ from functions import prep_editor, run_editor
 from dotenv import load_dotenv, find_dotenv
 import docx
 
-#from flask_socketio import SocketIO
-# this will come into use when we start using web sockets in order to get a better progress page running.
+# from flask_socketio import SocketIO
+# this will come into use when we start using web sockets in order to get a better progress page running
 
 load_dotenv(find_dotenv())
 logging.basicConfig(level=logging.INFO, filename="log.log", filemode="w")
@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 #16MB
 app.config["ALLOWED_EXTENSIONS"] = [".txt", ".docx"] #Would like to add LaTex and RTF compatibility later.
-#socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
