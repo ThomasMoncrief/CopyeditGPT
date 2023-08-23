@@ -2,13 +2,13 @@ import os, global_var, logging
 from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
 from functions import prep_editor, run_editor
-from dotenv import load_dotenv, find_dotenv
+#from dotenv import load_dotenv, find_dotenv
 import docx
 
 # from flask_socketio import SocketIO
 # this will come into use when we start using web sockets in order to get a better progress page running
 
-load_dotenv(find_dotenv())
+#load_dotenv(find_dotenv())
 logging.basicConfig(level=logging.INFO, filename="log.log", filemode="w")
 logger = logging.getLogger(__name__)
 
