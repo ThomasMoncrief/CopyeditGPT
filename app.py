@@ -5,7 +5,7 @@ from functions import prep_editor, run_editor
 from dotenv import load_dotenv, find_dotenv
 import docx
 
-load_dotenv(find_dotenv())
+load_dotenv(find_dotenv()) #
 
 #from flask_socketio import SocketIO
 # this will come into use when we start using web sockets in order to get a better progress page running.
@@ -14,7 +14,7 @@ load_dotenv(find_dotenv())
 logger = logging.getLogger(__name__)
 
 # Turn on debug level log statements from all libraries
-logging.getLogger().setLevel(logging.DEBUG)
+logging.getLogger().setLevel(logging.DEBUG) #
 
 app = Flask(__name__)
 app.config["UPLOAD_DIRECTORY"] = 'text_files/'
@@ -40,7 +40,7 @@ def upload():
             # but it takes a long time for it to check files that are 1 GB+
             global_var.extension = os.path.splitext(file.filename)[1]
             if global_var.extension not in app.config["ALLOWED_EXTENSIONS"]:
-                logger.error("Unallowed extension uploaded")
+                logger.error("Unallowed extension uploaded") #
                 return "Cannot upload that file type. Must be '.txt' or '.docx'"
 
             file.save("text_files/original" + global_var.extension)
