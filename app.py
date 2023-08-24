@@ -1,7 +1,7 @@
 import os, global_var, logging
 from flask import Flask, render_template, request, send_file, redirect
 from werkzeug.exceptions import RequestEntityTooLarge
-from functions import prep_editor, run_editor
+from functions import run_editor
 from dotenv import load_dotenv, find_dotenv
 import docx
 
@@ -29,6 +29,7 @@ def index():
 
 @app.route('/upload', methods=["POST"])
 def upload():
+    global_var.submit_text = "" #clear this variable in case the user clicked the back button
     global_var.key = request.form['key']
     if request.form['upload'] == "upload_file":
         try:
@@ -37,37 +38,38 @@ def upload():
                 return "Must upload a file"
             # Would be nice to check the file size here. Not sure if MAX_CONTENT checks it here or after file.save, 
             # but it takes a long time for it to check files that are 1 GB+
-            global_var.extension = os.path.splitext(file.filename)[1]
-            if global_var.extension not in app.config["ALLOWED_EXTENSIONS"]:
+            extension = os.path.splitext(file.filename)[1]
+            if extension not in app.config["ALLOWED_EXTENSIONS"]:
                 logger.error("Unallowed extension uploaded")
                 return "Cannot upload that file type. Must be '.txt' or '.docx'"
-
-            file.save("text_files/original" + global_var.extension)
-
         except RequestEntityTooLarge:
             return "File is too large."
-    
+
+        if extension == ".txt":
+            for paragraph in file.read().decode('utf-8', errors='ignore').split("\n"):
+                global_var.submit_text += paragraph + "\n"
+
+        if extension == ".docx":
+            file = docx.Document(file)
+            for paragraph in file.paragraphs:
+                global_var.submit_text += paragraph.text + "\n"
+
     if request.form['upload'] == "upload_text":        
         #reset paragraph formatting sent by the HTML form
-        text = request.form['text_box'].split("\r\n")
-        if text == [""]:
+        for paragraph in request.form['text_box'].split("\r\n"):
+            global_var.submit_text += paragraph + "\n"
+        if global_var.submit_text == [""]:
             return "Text box is blank"
-        submit_text = open("text_files/original.txt", "w", encoding='utf-8', errors="ignore")
-        for paragraph in text:
-            submit_text.write(paragraph + "\n")
-        submit_text.close()
-        global_var.extension = ".txt"
-    
-    global_var.submit_text = prep_editor(global_var.extension)
     return redirect('/progress')
 
 
 @app.route('/progress', methods=["GET", "POST"])
 def progress():
-    if request.method == "GET":
-        return render_template("progress.html", chunks=global_var.chunk_count, wait=global_var.chunk_count * 15)
+    chunk_count = (len(global_var.submit_text) // 4000) + 1
+    if request.method == "GET": 
+        return render_template("progress.html", chunks=chunk_count, wait=chunk_count * 15)
     if request.method == "POST":
-        run_editor(global_var.submit_text)
+        run_editor(global_var.submit_text, chunk_count)
         return redirect('/results')
 
 
@@ -85,7 +87,7 @@ def download():
     if file_type == "txt":
         return send_file("text_files/edited.txt", as_attachment=True)
     
-    #*Need to match original document's formatting. Otherwise it is difficult to reject changes. 
+    #*Would be nice to match the original document's formatting. Otherwise it is difficult to reject changes. 
     if file_type == "docx":
         edited = docx.Document()
         with open("text_files/edited.txt", "r", encoding='utf-8', errors="ignore") as f:
