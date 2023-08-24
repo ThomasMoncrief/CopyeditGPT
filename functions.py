@@ -1,30 +1,9 @@
 import openai
 import global_var
-from docx import Document
 import time
 
-def prep_editor(extension):
-    submit_text = ""
 
-    if extension == ".txt":
-        with open("text_files/original.txt", "r", encoding='utf-8', errors="ignore") as f:
-            original_text = f.read()
-        paragraph_text = original_text.split("\n")
-        for paragraph in paragraph_text:
-            print(paragraph)
-            submit_text += paragraph
-            submit_text += "\n"
-    
-    if extension == ".docx":
-        original_text = Document('text_files/original.docx')
-        for paragraph in original_text.paragraphs:
-            submit_text += paragraph.text + "\n"  
-    
-    global_var.chunk_count = (len(submit_text) // 4000) + 1
-    return submit_text
-    
-    
-def run_editor(submit_text):
+def run_editor(submit_text, chunk_count):
     edited_text = open("text_files/edited.txt", "w", encoding='utf-8', errors="ignore")
     run_count = 0
     while submit_text:
@@ -35,17 +14,17 @@ def run_editor(submit_text):
                 adj_count += 1
         submit_chunk += submit_text[:4000 + adj_count]
         submit_text = submit_text[4000 + adj_count:] #Writes over the chunk that was sent
-        
+
         #**EDITOR SWITCH**
         #Activate top line for testing purpose. Activate second line to run the editor.
-        #edited_text.write(submit_chunk)
-        #time.sleep(1)
+        # edited_text.write(submit_chunk)
+        # time.sleep(1)
         edited_text.write(openai_api(submit_chunk))
 
         #Prints progress to terminal. Need to get something working for client side.
         run_count += 1
-        print("Finished {:.0%}".format(run_count / global_var.chunk_count))
-    
+        print("Finished {:.0%}".format(run_count / chunk_count))
+
     edited_text.close()
 
 
