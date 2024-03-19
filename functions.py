@@ -1,4 +1,6 @@
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=global_var.key)
 import global_var
 import time
 
@@ -30,17 +32,16 @@ def run_editor(submit_text, chunk_count):
 
 def openai_api(original_text):
     
-    openai.api_key = global_var.key #filled in by upload()
+     #filled in by upload()
         
     prompt = "A professional copy editor has taken the text below and fixed mistakes. He followed the Chicago Manual of Style for writing numbers, capitalization, headers, and punctuation. He corrected any well-known factual mistakes involving statistics. He did not edit the voice or style of the prose. He formatted quotes as ASCII directional quotes.\n\n"
     prompt += original_text + "\n\nRewritten by the editor:\n"
 
-    chatgpt_response = openai.Completion.create(
-        model="text-davinci-003", 
-        prompt=prompt, 
-        temperature= 0.1, 
-        max_tokens=2000, top_p=1, 
-        frequency_penalty=0, 
-        presence_penalty=0)['choices'][0]['text']
+    chatgpt_response = client.completions.create(model="text-davinci-003", 
+    prompt=prompt, 
+    temperature= 0.1, 
+    max_tokens=2000, top_p=1, 
+    frequency_penalty=0, 
+    presence_penalty=0)['choices'][0]['text']
     return chatgpt_response
 #testChange
